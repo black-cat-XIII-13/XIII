@@ -321,10 +321,10 @@ body {
 }
 
 .eye {
-    width: 70px;
-    height: 40px;
+    width: 75px;
+    height: 35px;
     background: linear-gradient(135deg, #00ffcc, #00b386);
-    border-radius: 50% 0; /* Creates leaf/cat-eye shape */
+    border-radius: 80% 0; /* Sharper, more feline almond shape */
     transform: rotate(45deg);
     position: relative;
     overflow: hidden;
@@ -338,8 +338,8 @@ body {
 }
 
 .pupil {
-    width: 8px;
-    height: 32px;
+    width: 5px; /* Thinner slit for sharper feline look */
+    height: 34px;
     background: #030303;
     border-radius: 50%;
     position: absolute;
