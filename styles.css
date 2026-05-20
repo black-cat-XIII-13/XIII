@@ -325,7 +325,7 @@ body {
     height: 35px;
     background: linear-gradient(135deg, #00ffcc, #00b386);
     border-radius: 80% 0; /* Sharper, more feline almond shape */
-    transform: rotate(45deg);
+    transform: rotate(15deg);
     position: relative;
     overflow: hidden;
     box-shadow: 0 0 25px rgba(0, 255, 204, 0.4), inset 0 0 10px rgba(0,0,0,0.6);
@@ -334,7 +334,7 @@ body {
 }
 
 .right-eye {
-    transform: rotate(-45deg) scaleX(-1);
+    transform: rotate(-15deg) scaleX(-1);
 }
 
 .pupil {
@@ -345,13 +345,13 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
+    transform: translate(-50%, -50%) rotate(-15deg);
     transition: var(--transition-smooth);
     box-shadow: 0 0 8px rgba(0,0,0,0.8);
 }
 
 .right-eye .pupil {
-    transform: translate(-50%, -50%) rotate(45deg);
+    transform: translate(-50%, -50%) rotate(-15deg);
 }
 
 .cat-eyes-container:hover .eye {
@@ -850,10 +850,10 @@ body {
 /* ANIMATIONS */
 @keyframes eyeBlink {
     0%, 96%, 100% {
-        transform: rotate(45deg) scaleY(1);
+        transform: rotate(15deg) scaleY(1);
     }
     98% {
-        transform: rotate(45deg) scaleY(0.05);
+        transform: rotate(15deg) scaleY(0.05);
     }
 }
 
@@ -864,10 +864,10 @@ body {
 
 @keyframes eyeBlinkRight {
     0%, 96%, 100% {
-        transform: rotate(-45deg) scaleX(-1) scaleY(1);
+        transform: rotate(-15deg) scaleX(-1) scaleY(1);
     }
     98% {
-        transform: rotate(-45deg) scaleX(-1) scaleY(0.05);
+        transform: rotate(-15deg) scaleX(-1) scaleY(0.05);
     }
 }
 
