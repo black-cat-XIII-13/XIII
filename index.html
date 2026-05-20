@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="البوابة الشخصية لـ BLACK CAT - طالب في الثانوية العامة، محب للرقم 13 والقطط السوداء، مستغرق في تأمل الفلسفة وربطها بالقرآن الكريم في إيجاز بليغ.">
+    <title>BLACK CAT | الظل والبرهان</title>
+
+    <!-- Google Fonts: Amiri for Arabic philosophy/Quranic style, Cairo for UI, Cinzel for English titles and numbers -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700&family=Cinzel:wght@400;700;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="dark-theme">
+
+    <!-- Ambient Sound System & Cursor Glow -->
+    <div id="cursor-glow"></div>
+    <div class="background-overlay"></div>
+    <canvas id="starfield"></canvas>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="logo">
+            <span class="cinzel text-glow">XIII</span>
+            <span class="divider">|</span>
+            <span class="logo-text">BLACK CAT</span>
+        </div>
+        <nav class="nav">
+            <a href="#hero" class="nav-link active">البداية</a>
+            <a href="#identity" class="nav-link">الهوية</a>
+            <a href="#philosophy" class="nav-link">التأملات</a>
+            <a href="#reflections" class="nav-link">١٣ حقيقة</a>
+            <a href="#silence" class="nav-link">صندوق الصمت</a>
+        </nav>
+        <div class="audio-control" id="audio-toggle" title="تشغيل موسيقى العراب (The Godfather)">
+            <svg class="audio-icon" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="currentColor"
+                    d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
+            </svg>
+            <span class="audio-status">صامت</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- SECTION 1: HERO (عتبة الصمت) -->
+        <section id="hero" class="section hero-section active-section">
+            <div class="hero-content">
+                <div class="cat-eyes-container">
+                    <div class="eye left-eye">
+                        <div class="pupil"></div>
+                    </div>
+                    <div class="number-13 cinzel text-glow">13</div>
+                    <div class="eye right-eye">
+                        <div class="pupil"></div>
+                    </div>
+                </div>
+                <h1 class="hero-title cinzel">BLACK CAT</h1>
+                <p class="hero-subtitle">«كلما اتسعت الرؤية، ضاقت العبارة»</p>
+                <div class="scroll-indicator">
+                    <span class="arrow">↓</span>
+                    <span class="scroll-text">ادخل في العمق</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: IDENTITY (الهوية) -->
+        <section id="identity" class="section identity-section">
+            <div class="glass-card identity-card">
+                <h2 class="section-title">الهوية والمسار</h2>
+                <div class="identity-grid">
+                    <div class="identity-item">
+                        <span class="item-label">الاسم الرمزي</span>
+                        <span class="item-val cinzel text-glow">BLACK CAT</span>
+                    </div>
+                    <div class="identity-item">
+                        <span class="item-label">المكانة</span>
+                        <span class="item-val">طالب في محراب العلم — الصف الثالث الثانوي</span>
+                    </div>
+                    <div class="identity-item">
+                        <span class="item-label">الشعار</span>
+                        <span class="item-val">لا أحب كثرة الكلام، بل أعشق بليغ الأثر.</span>
+                    </div>
+                    <div class="identity-item">
+                        <span class="item-label">الرمز المفضّل</span>
+                        <span class="item-val">الرقم <span class="cinzel font-bold text-glow">13</span> والقط الأسود —
+                            رموز التفرد والغموض.</span>
+                    </div>
+                </div>
+                <blockquote class="philosophical-quote">
+                    "عبر متاهة الثانوية العامة وضغوط المناهج، أجد ملاذي في فضاء الفكر. الفلسفة تفتح لي أبواب السؤال،
+                    والقرآن يمنحني برهان اليقين."
+                </blockquote>
+            </div>
+        </section>
+
+        <!-- SECTION 3: PHILOSOPHY & QURAN (التأملات الوجودية) -->
+        <section id="philosophy" class="section philosophy-section">
+            <h2 class="section-title text-center">التأملات: الفلسفة والقرآن</h2>
+            <p class="section-subtitle text-center">اضغط على أي تساؤل فلسفي لتكتشف نور البرهان القرآني</p>
+
+            <div class="philosophy-grid">
+
+                <!-- Card 1 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card">
+                            <div class="card-icon">🌀</div>
+                            <h3>القلق الوجودي والعبثية</h3>
+                            <p class="philosophy-school">كامو وسارتر: الحياة عبث لا معنى له، ونحن محكومون بالحرية
+                                والضياع.</p>
+                            <span class="action-hint">انقر للكشف عن البرهان</span>
+                        </div>
+                        <div class="flip-card-back glass-card">
+                            <div class="card-icon gold">📖</div>
+                            <h3>برهان الغاية والرجوع</h3>
+                            <blockquote class="quran-verse">
+                                "أَفَحَسِبْتُمْ أَنَّمَا خَلَقْنَاكُمْ عَبَثًا وَأَنَّكُمْ إِلَيْنَا لَا تُرْجَعُونَ"
+                                <span class="verse-ref">سورة المؤمنون - 115</span>
+                            </blockquote>
+                            <p class="synthesis">لا عبث في الصنع، فالحرية اختبار والوجود له غاية تتجاوز الفناء المادي.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card">
+                            <div class="card-icon">⏳</div>
+                            <h3>الزمن والعدم</h3>
+                            <p class="philosophy-school">هايدغر: الإنسان كينونة نحو الموت، والزمن يسير بنا نحو الفناء
+                                المطلق.</p>
+                            <span class="action-hint">انقر للكشف عن البرهان</span>
+                        </div>
+                        <div class="flip-card-back glass-card">
+                            <div class="card-icon gold">📖</div>
+                            <h3>برهان البقاء والأبدية</h3>
+                            <blockquote class="quran-verse">
+                                "كُلُّ مَنْ عَلَيْهَا فَانٍ * وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو الْجَلَالِ وَالْإِكْرَامِ"
+                                <span class="verse-ref">سورة الرحمن - 26-27</span>
+                            </blockquote>
+                            <p class="synthesis">الموت ليس نهاية الكينونة، بل هو جسر العبور من فناء المادة إلى بقاء وجه
+                                خالق الزمن.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card">
+                            <div class="card-icon">🧠</div>
+                            <h3>الوعي والذات الشاكة</h3>
+                            <p class="philosophy-school">ديكارت: أنا أشك إذن أنا أفكر إذن أنا موجود. الشك طريق إثبات
+                                الذات.</p>
+                            <span class="action-hint">انقر للكشف عن البرهان</span>
+                        </div>
+                        <div class="flip-card-back glass-card">
+                            <div class="card-icon gold">📖</div>
+                            <h3>برهان النفس والبصيرة</h3>
+                            <blockquote class="quran-verse">
+                                "وَفِي أَنفُسِكُمْ ۚ أَفَلَا تُبْصِرُونَ"
+                                <span class="verse-ref">سورة الذاريات - 21</span>
+                            </blockquote>
+                            <p class="synthesis">الشك بوابة عقلية، لكن تأمل الذات وبنيتها العميقة هو الذي يورث اليقين
+                                والبصيرة الحقة.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front glass-card">
+                            <div class="card-icon">⚙️</div>
+                            <h3>الجبر وحرية الإرادة</h3>
+                            <p class="philosophy-school">سبينوزا: حرية الإرادة وهم، والإنسان مسير بقوانين الطبيعة
+                                الحتمية.</p>
+                            <span class="action-hint">انقر للكشف عن البرهان</span>
+                        </div>
+                        <div class="flip-card-back glass-card">
+                            <div class="card-icon gold">📖</div>
+                            <h3>برهان المسؤولية والقدر</h3>
+                            <blockquote class="quran-verse">
+                                "كُلُّ امْرِئٍ بِمَا كَسَبَ رَهِينٌ"
+                                <span class="verse-ref">سورة الطور - 21</span>
+                            </blockquote>
+                            <p class="synthesis">نحن نتحرك في فضاء القدر الإلهي الشامل، لكننا مسؤولون تماماً عما نختار
+                                ونكسب بأيدينا.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: THE 13 REFLECTIONS (١٣ حقيقة مكتوبة بالصمت) -->
+        <section id="reflections" class="section reflections-section">
+            <h2 class="section-title text-center">أسرار الرقم <span class="cinzel text-glow">13</span></h2>
+            <p class="section-subtitle text-center">ثلاث عشرة ومضة من التفكير البسيط والعميق. اضغط على الدوائر لتأملها.
+            </p>
+
+            <div class="reflections-container">
+                <div class="reflections-wheel" id="reflections-wheel">
+                    <!-- The JS will dynamically position the 13 nodes here in a circle around the center black cat, or a dynamic card UI -->
+                    <div class="wheel-center">
+                        <div class="center-cat">🐱</div>
+                        <div class="center-13 cinzel text-glow">13</div>
+                    </div>
+                    <!-- Nodes will be injected here by Javascript -->
+                </div>
+                <div class="reflection-display-panel glass-card">
+                    <div class="display-placeholder">اختر ومضة من الهالة المحيطة لقراءتها...</div>
+                    <div class="display-content" style="display: none;">
+                        <span class="reflection-number cinzel">Ref. 01</span>
+                        <p class="reflection-text"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: CONTACT IN SILENCE (صندوق الصمت) -->
+        <section id="silence" class="section contact-section">
+            <div class="glass-card contact-card">
+                <h2 class="section-title">صندوق الصمت</h2>
+                <p class="contact-subtitle">«إذا كان الكلام من فضة، فالسكوت ذهب. اترك فكرة فلسفية أو تساؤلاً هنا في
+                    إيجاز تام.»</p>
+                <form id="silence-form" onsubmit="event.preventDefault(); submitSilence();">
+                    <div class="input-group">
+                        <input type="text" id="silent-name" placeholder="الاسم المستعار (أو اتركه فارغاً)"
+                            autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <textarea id="silent-thought" placeholder="اكتب تأملك هنا... باختصار شديد." rows="3"
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn text-glow">إرسال الفكرة إلى الفراغ</button>
+                </form>
+                <div id="silence-feedback" class="silence-feedback"></div>
+
+                <div class="recent-thoughts">
+                    <h3>أفكار سابقة في صندوق الصمت:</h3>
+                    <div id="thoughts-list" class="thoughts-list">
+                        <!-- List of user-submitted thoughts saved in localStorage -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 BLACK CAT. جميع الحقوق محفوظة لظل الفكرة. رقم ١٣ هو المبدأ.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

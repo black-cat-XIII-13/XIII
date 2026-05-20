@@ -1,0 +1,1006 @@
+/* ==========================================================================
+   BLACK CAT PORTFOLIO - CSS DESIGN SYSTEM & STYLING
+   ========================================================================== */
+
+/* Design Tokens & Variables */
+:root {
+    --bg-base: #060608;
+    --bg-surface: rgba(15, 15, 22, 0.65);
+    --bg-surface-hover: rgba(22, 22, 33, 0.8);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-glow: rgba(212, 175, 55, 0.2);
+    
+    /* Harmonious Palette */
+    --color-text-main: #e2e8f0;
+    --color-text-muted: #94a3b8;
+    --color-gold: #d4af37; /* Quranic light, divine wisdom */
+    --color-gold-glow: rgba(212, 175, 55, 0.6);
+    --color-green: #00ffcc; /* Cat eye green, neon vibrancy */
+    --color-green-glow: rgba(0, 255, 204, 0.5);
+    --color-violet: #8b5cf6; /* Philosophical deep space */
+    --color-violet-glow: rgba(139, 92, 246, 0.4);
+    
+    /* Typography */
+    --font-ui: 'Cairo', sans-serif;
+    --font-philosophy: 'Amiri', serif;
+    --font-eng: 'Cinzel', serif;
+    
+    /* Transitions */
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.2s ease;
+}
+
+/* Base resets & Scrollbar */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+    background: #1e1e2d;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gold);
+}
+
+body {
+    background-color: var(--bg-base);
+    color: var(--color-text-main);
+    font-family: var(--font-ui);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Background Animations & Overlays */
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 255, 204, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.04) 0%, transparent 50%);
+    z-index: -2;
+    pointer-events: none;
+}
+
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -3;
+    pointer-events: none;
+}
+
+/* Interactive Cursor Glow */
+#cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(0, 255, 204, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+/* Typography utilities */
+.cinzel {
+    font-family: var(--font-eng);
+}
+.text-glow {
+    text-shadow: 0 0 10px var(--color-gold-glow);
+}
+.font-bold {
+    font-weight: 700;
+}
+
+/* Header & Navigation */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background: rgba(6, 6, 8, 0.8);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    transition: var(--transition-smooth);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo .cinzel {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--color-gold);
+    letter-spacing: 2px;
+}
+
+.logo .divider {
+    color: rgba(255, 255, 255, 0.2);
+    font-weight: 300;
+}
+
+.logo-text {
+    font-family: var(--font-eng);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--color-text-main);
+}
+
+.nav {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-link {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: var(--transition-fast);
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-gold);
+    transition: var(--transition-fast);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-text-main);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+    left: 0;
+}
+
+.audio-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.02);
+    transition: var(--transition-fast);
+    user-select: none;
+}
+
+.audio-control:hover {
+    border-color: var(--color-green);
+    background: rgba(0, 255, 204, 0.05);
+}
+
+.audio-icon {
+    color: var(--color-text-muted);
+    transition: var(--transition-fast);
+}
+
+.audio-control:hover .audio-icon, .audio-control.playing .audio-icon {
+    color: var(--color-green);
+    filter: drop-shadow(0 0 5px var(--color-green-glow));
+}
+
+.audio-status {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+/* Container & Sections */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 20px 60px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+}
+
+.section {
+    min-height: calc(100vh - 180px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--color-text-main);
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    align-self: center;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--color-gold);
+    margin: 12px auto 0 auto;
+    border-radius: 2px;
+    box-shadow: 0 0 8px var(--color-gold-glow);
+}
+
+.section-subtitle {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    margin-top: -5px;
+    margin-bottom: 50px;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: var(--transition-smooth);
+}
+
+.glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: var(--bg-surface-hover);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* SECTION 1: HERO - Mysterious Entrance */
+.hero-section {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 120px);
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.cat-eyes-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    height: 120px;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.eye {
+    width: 70px;
+    height: 40px;
+    background: linear-gradient(135deg, #00ffcc, #00b386);
+    border-radius: 50% 0; /* Creates leaf/cat-eye shape */
+    transform: rotate(45deg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(0, 255, 204, 0.4), inset 0 0 10px rgba(0,0,0,0.6);
+    transition: var(--transition-smooth);
+    animation: eyeBlink 8s infinite;
+}
+
+.right-eye {
+    transform: rotate(-45deg) scaleX(-1);
+}
+
+.pupil {
+    width: 8px;
+    height: 32px;
+    background: #030303;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    transition: var(--transition-smooth);
+    box-shadow: 0 0 8px rgba(0,0,0,0.8);
+}
+
+.right-eye .pupil {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.cat-eyes-container:hover .eye {
+    box-shadow: 0 0 40px rgba(0, 255, 204, 0.8), inset 0 0 10px rgba(0,0,0,0.4);
+}
+
+.cat-eyes-container:hover .pupil {
+    width: 14px; /* Dilation */
+}
+
+.number-13 {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--color-gold);
+    position: absolute;
+    z-index: 10;
+    line-height: 1;
+    pointer-events: none;
+    transition: var(--transition-smooth);
+    animation: pulseGlow 4s infinite ease-in-out;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 6px;
+    color: var(--color-text-main);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.hero-subtitle {
+    font-family: var(--font-philosophy);
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--color-gold);
+    max-width: 600px;
+    text-shadow: 0 0 10px var(--color-gold-glow);
+    margin-top: 10px;
+}
+
+.scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 50px;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    transition: var(--transition-fast);
+}
+
+.scroll-indicator:hover {
+    color: var(--color-gold);
+}
+
+.scroll-indicator .arrow {
+    font-size: 1.5rem;
+    animation: bounce 2s infinite;
+}
+
+.scroll-indicator .scroll-text {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+}
+
+/* SECTION 2: IDENTITY */
+.identity-card {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.identity-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.identity-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.identity-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.item-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.item-val {
+    font-size: 1.15rem;
+    color: var(--color-text-main);
+    font-weight: 600;
+}
+
+.philosophical-quote {
+    font-family: var(--font-philosophy);
+    font-size: 1.45rem;
+    border-right: 4px solid var(--color-gold);
+    padding: 0px 20px;
+    color: var(--color-text-main);
+    line-height: 1.8;
+    background: rgba(212, 175, 55, 0.02);
+    border-radius: 4px 0 0 4px;
+}
+
+/* SECTION 3: PHILOSOPHY & QURAN CARDS */
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Flip card mechanics */
+.flip-card {
+    background-color: transparent;
+    height: 280px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.flip-card-front {
+    background-color: var(--bg-surface);
+}
+
+.flip-card-back {
+    background-color: rgba(13, 13, 20, 0.9);
+    transform: rotateY(180deg);
+    border-color: var(--color-gold-glow);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+.card-icon {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.1));
+}
+
+.card-icon.gold {
+    filter: drop-shadow(0 0 10px var(--color-gold-glow));
+}
+
+.flip-card-front h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--color-text-main);
+}
+
+.philosophy-school {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    max-width: 80%;
+    margin-bottom: 20px;
+}
+
+.action-hint {
+    font-size: 0.75rem;
+    color: var(--color-gold);
+    letter-spacing: 1px;
+    border-bottom: 1px dashed var(--color-gold);
+    padding-bottom: 2px;
+}
+
+.quran-verse {
+    font-family: var(--font-philosophy);
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    text-shadow: 0 0 10px var(--color-gold-glow);
+    line-height: 1.8;
+    margin-bottom: 15px;
+    max-width: 90%;
+}
+
+.verse-ref {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 8px;
+    font-weight: 300;
+}
+
+.synthesis {
+    font-size: 0.9rem;
+    color: var(--color-text-main);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 12px;
+    width: 80%;
+}
+
+/* SECTION 4: THE 13 REFLECTIONS (Circular Interactive Element) */
+.reflections-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 20px;
+    min-height: 480px;
+}
+
+.reflections-wheel {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.wheel-center {
+    width: 100px;
+    height: 100px;
+    background: #0d0d15;
+    border: 2px solid var(--color-gold);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    box-shadow: 0 0 25px var(--color-gold-glow), inset 0 0 15px rgba(0,0,0,0.8);
+    position: relative;
+    user-select: none;
+}
+
+.center-cat {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.center-13 {
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--color-gold);
+}
+
+.reflection-node {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    background: rgba(15, 15, 22, 0.9);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    transition: var(--transition-smooth);
+    z-index: 5;
+    user-select: none;
+}
+
+.reflection-node:hover {
+    border-color: var(--color-green);
+    color: var(--color-green);
+    box-shadow: 0 0 15px var(--color-green-glow);
+    transform: scale(1.15);
+}
+
+.reflection-node.active {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 20px var(--color-gold-glow);
+    transform: scale(1.2);
+}
+
+.reflection-display-panel {
+    flex-grow: 1;
+    min-height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    position: relative;
+    border-left: 3px solid var(--color-gold);
+}
+
+.display-placeholder {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    text-align: center;
+}
+
+.display-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.reflection-number {
+    font-size: 1rem;
+    color: var(--color-gold);
+    letter-spacing: 2px;
+    font-weight: 700;
+    text-shadow: 0 0 8px var(--color-gold-glow);
+}
+
+.reflection-text {
+    font-family: var(--font-philosophy);
+    font-size: 1.65rem;
+    line-height: 1.8;
+    color: var(--color-text-main);
+    animation: fadeIn 0.5s forwards ease;
+}
+
+/* SECTION 5: SILENT BOX */
+.contact-card {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.contact-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: 30px;
+    text-align: center;
+    font-style: italic;
+}
+
+#silence-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group input, .input-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-color);
+    padding: 15px 20px;
+    color: var(--color-text-main);
+    font-family: var(--font-ui);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: var(--transition-fast);
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    background: rgba(255,255,255,0.04);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+.submit-btn {
+    background: transparent;
+    border: 1px solid var(--color-gold);
+    color: var(--color-gold);
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+    background: var(--color-gold);
+    color: #000;
+    box-shadow: 0 0 20px var(--color-gold-glow);
+    transform: translateY(-2px);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.silence-feedback {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    text-align: center;
+    min-height: 20px;
+    transition: var(--transition-fast);
+}
+
+.silence-feedback.success {
+    color: var(--color-green);
+    text-shadow: 0 0 5px var(--color-green-glow);
+}
+
+/* Recent Thoughts */
+.recent-thoughts {
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 30px;
+}
+
+.recent-thoughts h3 {
+    font-size: 1.1rem;
+    color: var(--color-text-main);
+    margin-bottom: 20px;
+}
+
+.thoughts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.thought-item {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 8px;
+    animation: slideDown 0.3s forwards ease;
+}
+
+.thought-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+}
+
+.thought-author {
+    font-weight: 600;
+    color: var(--color-gold);
+}
+
+.thought-text {
+    font-size: 0.9rem;
+    color: var(--color-text-main);
+    font-style: italic;
+    word-break: break-word;
+}
+
+/* Footer styling */
+.footer {
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    border-top: 1px solid var(--border-color);
+}
+
+/* ANIMATIONS */
+@keyframes eyeBlink {
+    0%, 96%, 100% {
+        transform: rotate(45deg) scaleY(1);
+    }
+    98% {
+        transform: rotate(45deg) scaleY(0.05);
+    }
+}
+
+/* Differentiate right eye blink rotation */
+.right-eye {
+    animation: eyeBlinkRight 8s infinite;
+}
+
+@keyframes eyeBlinkRight {
+    0%, 96%, 100% {
+        transform: rotate(-45deg) scaleX(-1) scaleY(1);
+    }
+    98% {
+        transform: rotate(-45deg) scaleX(-1) scaleY(0.05);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px var(--color-gold-glow);
+        transform: scale(1);
+    }
+    50% {
+        text-shadow: 0 0 30px var(--color-gold-glow), 0 0 50px var(--color-gold-glow);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-8px);
+    }
+    60% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 968px) {
+    .container {
+        padding-top: 100px;
+        gap: 80px;
+    }
+    
+    .philosophy-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .reflections-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .reflection-display-panel {
+        width: 100%;
+        border-left: none;
+        border-top: 3px solid var(--color-gold);
+        padding-top: 30px;
+        min-height: 180px;
+    }
+    
+    .identity-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .header {
+        padding: 15px 5%;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav {
+        gap: 15px;
+    }
+    
+    .logo .cinzel {
+        font-size: 1.2rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .reflections-wheel {
+        width: 300px;
+        height: 300px;
+    }
+    
+    .wheel-center {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .center-13 {
+        font-size: 1.3rem;
+    }
+    
+    .center-cat {
+        font-size: 1.2rem;
+    }
+    
+    .reflection-node {
+        width: 30px;
+        height: 30px;
+        font-size: 0.75rem;
+    }
+    
+    .glass-card {
+        padding: 20px;
+    }
+    
+    .philosophical-quote {
+        font-size: 1.2rem;
+    }
+    
+    .quran-verse {
+        font-size: 1.3rem;
+    }
+}
