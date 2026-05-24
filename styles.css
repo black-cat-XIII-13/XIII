@@ -838,6 +838,109 @@ body {
     word-break: break-word;
 }
 
+/* Clock Section Styling */
+.clock-section {
+    position: relative;
+}
+
+.clock-display-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.clock-info {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: right;
+}
+
+.clock-info h3 {
+    font-size: 2.2rem;
+    color: var(--color-gold);
+    letter-spacing: 3px;
+}
+
+.clock-quote {
+    font-family: var(--font-philosophy);
+    font-size: 1.5rem;
+    line-height: 1.9;
+    color: var(--color-text-main);
+    border-right: 4px solid var(--color-gold);
+    padding-right: 20px;
+}
+
+.digital-time-container {
+    margin-top: 15px;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--color-text-muted);
+}
+
+#digital-clock {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--color-green);
+    text-shadow: 0 0 10px var(--color-green-glow);
+    letter-spacing: 2px;
+}
+
+.clock-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 450px;
+    position: relative;
+    user-select: none;
+}
+
+#shadow-clock-svg {
+    width: 100%;
+    height: auto;
+    max-width: 420px;
+}
+
+.clock-rim {
+    stroke: var(--color-gold);
+    stroke-width: 1.5;
+    filter: drop-shadow(0 0 5px var(--color-gold-glow));
+}
+
+.clock-rim-inner {
+    stroke: rgba(212, 175, 55, 0.25);
+    stroke-width: 1;
+}
+
+.clock-number {
+    font-family: var(--font-eng);
+    font-size: 1.45rem;
+    font-weight: 700;
+    fill: var(--color-text-main);
+    opacity: 0.65;
+    transition: var(--transition-fast);
+}
+
+.clock-number:hover {
+    opacity: 1;
+    fill: var(--color-gold);
+    text-shadow: 0 0 8px var(--color-gold-glow);
+}
+
+/* Gear Styling */
+.clock-gear {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: opacity var(--transition-smooth);
+}
+
 /* Footer styling */
 .footer {
     text-align: center;
@@ -923,6 +1026,26 @@ body {
         gap: 80px;
     }
     
+    .clock-display-container {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .clock-info {
+        text-align: center;
+        align-items: center;
+    }
+    
+    .clock-quote {
+        border-right: none;
+        border-bottom: 2px solid var(--color-gold);
+        padding-right: 0;
+        padding-bottom: 20px;
+        width: 100%;
+        max-width: 600px;
+    }
+    
     .philosophy-grid {
         grid-template-columns: 1fr;
     }
@@ -946,6 +1069,16 @@ body {
 }
 
 @media (max-width: 600px) {
+    .clock-info h3 {
+        font-size: 1.8rem;
+    }
+    .clock-quote {
+        font-size: 1.25rem;
+    }
+    #digital-clock {
+        font-size: 1.4rem;
+    }
+
     .header {
         padding: 15px 5%;
         flex-direction: column;

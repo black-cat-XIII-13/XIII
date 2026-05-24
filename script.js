@@ -380,6 +380,301 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/'/g, '&#039;');
     }
 
+    // --- 7. SHADOW CLOCK INTERACTIVE LOGIC ---
+    
+    // Clock DOM Elements
+    const digitalClock = document.getElementById('digital-clock');
+    const gearsContainer = document.getElementById('clock-gears');
+    const faceNumbersContainer = document.getElementById('clock-face-numbers');
+    
+    const catContainer = document.getElementById('clock-cat-container');
+    const catBobGroup = document.getElementById('cat-bobbing-group');
+    const catEyes = document.getElementById('cat-eyes');
+    const clockSvg = document.getElementById('shadow-clock-svg');
+    
+    const tailOuter = document.getElementById('shadow-clock-tail');
+    const tailCore = document.getElementById('shadow-clock-tail-core');
+
+    const legFL = document.getElementById('leg-front-left');
+    const legFR = document.getElementById('leg-front-right');
+    const legBL = document.getElementById('leg-back-left');
+    const legBR = document.getElementById('leg-back-right');
+
+    // 7a. Generate Clock Face Numbers
+    const numbers = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    const rFace = 182; // radius for numbers placement
+    
+    numbers.forEach(h => {
+        const angle = ((h - 3) * 30 * Math.PI) / 180;
+        const x = 250 + rFace * Math.cos(angle);
+        const y = 250 + rFace * Math.sin(angle);
+        
+        const textElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        textElement.setAttribute('x', x);
+        textElement.setAttribute('y', y);
+        textElement.setAttribute('class', 'clock-number cinzel');
+        textElement.setAttribute('text-anchor', 'middle');
+        textElement.setAttribute('dominant-baseline', 'central');
+        textElement.textContent = h;
+        faceNumbersContainer.appendChild(textElement);
+    });
+
+    // 7b. Helper: Draw Gear teeth SVG Path
+    function drawGearPath(cx, cy, teeth, m) {
+        const rp = m * teeth;
+        const ro = rp + m;
+        const ri = rp - 1.25 * m;
+        
+        const points = [];
+        const angleStep = (2 * Math.PI) / teeth;
+        
+        const tBottom = 0.35;
+        const tSlope = 0.15;
+        const tTop = 0.35;
+        
+        for (let i = 0; i < teeth; i++) {
+            const baseAngle = i * angleStep;
+            const a0 = baseAngle;
+            const a1 = baseAngle + angleStep * tBottom;
+            const a2 = a1 + angleStep * tSlope;
+            const a3 = a2 + angleStep * tTop;
+            
+            points.push(`${cx + ri * Math.cos(a0)},${cy + ri * Math.sin(a0)}`);
+            points.push(`${cx + ri * Math.cos(a1)},${cy + ri * Math.sin(a1)}`);
+            points.push(`${cx + ro * Math.cos(a2)},${cy + ro * Math.sin(a2)}`);
+            points.push(`${cx + ro * Math.cos(a3)},${cy + ro * Math.sin(a3)}`);
+        }
+        
+        return `M ${points.join(' L ')} Z`;
+    }
+
+    // 7c. Generate Gear SVGs and configure
+    const m = 2.2;
+    const gearsConfig = [
+        { id: 'gear-center', cx: 250, cy: 250, teeth: 28, speedMult: 1, offset: 0, color: 'var(--color-gold)' },
+        { id: 'gear-top-left', cx: 178.4, cy: 178.4, teeth: 18, speedMult: -28/18, offset: 10, color: 'var(--color-gold)' },
+        { id: 'gear-top-right', cx: 321.6, cy: 178.4, teeth: 18, speedMult: -28/18, offset: 10, color: 'var(--color-gold)' },
+        { id: 'gear-bottom', cx: 250, cy: 360, teeth: 22, speedMult: -28/22, offset: 8, color: 'var(--color-violet)' },
+        { id: 'gear-bottom-small', cx: 185.2, cy: 397.4, teeth: 12, speedMult: 28/12, offset: 15, color: 'var(--color-green)' }
+    ];
+
+    gearsConfig.forEach(g => {
+        const rp = m * g.teeth;
+        const ri = rp - 1.25 * m;
+        const innerRimRadius = ri - 2;
+        
+        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        group.setAttribute('id', g.id);
+        group.setAttribute('class', 'clock-gear');
+        group.style.stroke = g.color;
+        group.style.fill = 'none';
+        group.style.strokeWidth = '1';
+        group.style.opacity = g.id === 'gear-center' ? '0.12' : '0.22';
+        group.style.filter = 'drop-shadow(0 0 3px rgba(255,255,255,0.05))';
+        
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', drawGearPath(g.cx, g.cy, g.teeth, m));
+        group.appendChild(path);
+        
+        const circleRim = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circleRim.setAttribute('cx', g.cx);
+        circleRim.setAttribute('cy', g.cy);
+        circleRim.setAttribute('r', innerRimRadius);
+        group.appendChild(circleRim);
+        
+        const hubOuter = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        hubOuter.setAttribute('cx', g.cx);
+        hubOuter.setAttribute('cy', g.cy);
+        hubOuter.setAttribute('r', 13);
+        group.appendChild(hubOuter);
+        
+        const hubInner = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        hubInner.setAttribute('cx', g.cx);
+        hubInner.setAttribute('cy', g.cy);
+        hubInner.setAttribute('r', 7);
+        hubInner.setAttribute('fill', g.color);
+        group.appendChild(hubInner);
+        
+        const spokesCount = g.teeth > 20 ? 6 : 4;
+        for (let i = 0; i < spokesCount; i++) {
+            const angle = (i * 2 * Math.PI) / spokesCount;
+            const x1 = g.cx + 13 * Math.cos(angle);
+            const y1 = g.cy + 13 * Math.sin(angle);
+            const x2 = g.cx + innerRimRadius * Math.cos(angle);
+            const y2 = g.cy + innerRimRadius * Math.sin(angle);
+            
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', x1);
+            line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+            group.appendChild(line);
+        }
+        gearsContainer.appendChild(group);
+    });
+
+    // 7d. Interactive Mouse & Animation States
+    let mouseX = 250;
+    let mouseY = 250;
+    let targetMouseX = 250;
+    let targetMouseY = 250;
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!clockSvg) return;
+        const rect = clockSvg.getBoundingClientRect();
+        const scaleX = 500 / rect.width;
+        const scaleY = 500 / rect.height;
+        targetMouseX = (e.clientX - rect.left) * scaleX;
+        targetMouseY = (e.clientY - rect.top) * scaleY;
+    });
+
+    // Clock System Variables
+    const R_cat = 216; // Cat walks on outer rim of radius 216
+    let catAngle = -90; // Starts at 12 o'clock (-90 degrees)
+    let gearAngle = 0;
+    let walkTime = 0;
+    let currentEyeX = 0;
+    let currentEyeY = 0;
+
+    // 7e. Main Loop
+    function animateClock() {
+        // Interpolate mouse coordinates smoothly
+        mouseX += (targetMouseX - mouseX) * 0.08;
+        mouseY += (targetMouseY - mouseY) * 0.08;
+        
+        const now = new Date();
+        const hrs = now.getHours();
+        const mins = now.getMinutes();
+        const secs = now.getSeconds();
+        const ms = now.getMilliseconds();
+        
+        // Update Digital Clock
+        if (digitalClock) {
+            const pad = (n) => n.toString().padStart(2, '0');
+            digitalClock.textContent = `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+        }
+        
+        // Calculate Target Hour Angle (12 o'clock is -90 deg. Each hour is 30 deg.)
+        const currentHour = hrs % 12;
+        let targetHourAngle = -90 + currentHour * 30;
+        
+        // Normalise target to be clockwise (ahead of catAngle)
+        while (targetHourAngle < catAngle) {
+            targetHourAngle += 360;
+        }
+        
+        // Walk State Machine
+        const angleDiff = targetHourAngle - catAngle;
+        
+        if (angleDiff > 0.15) {
+            // Cat walks towards designated hour (constant speed or ease)
+            const speed = Math.min(angleDiff, 0.85); // 0.85 degrees per frame
+            catAngle += speed;
+            walkTime += 0.16; // walk cycles
+            
+            // Bobbing body animation
+            const bob = 1.2 * Math.abs(Math.sin(walkTime * 2.2));
+            if (catBobGroup) {
+                catBobGroup.setAttribute('transform', `translate(0, ${bob})`);
+            }
+            
+            // Swing legs (diagonal walking gait)
+            const swing = 18 * Math.sin(walkTime * 2.2);
+            if (legFL) legFL.setAttribute('transform', `rotate(${swing}, 7.2, -7)`);
+            if (legFR) legFR.setAttribute('transform', `rotate(${-swing}, 11.8, -7)`);
+            if (legBL) legBL.setAttribute('transform', `rotate(${swing}, -7.2, -7)`);
+            if (legBR) legBR.setAttribute('transform', `rotate(${-swing}, -11.2, -7)`);
+        } else {
+            // Cat stops exactly at the hour
+            catAngle = targetHourAngle;
+            
+            // Return to standing posture
+            if (catBobGroup) catBobGroup.setAttribute('transform', 'translate(0, 0)');
+            if (legFL) legFL.setAttribute('transform', 'rotate(0, 7.2, -7)');
+            if (legFR) legFR.setAttribute('transform', 'rotate(0, 11.8, -7)');
+            if (legBL) legBL.setAttribute('transform', 'rotate(0, -7.2, -7)');
+            if (legBR) legBR.setAttribute('transform', 'rotate(0, -11.2, -7)');
+        }
+        
+        // Position Cat on Clock Rim
+        const catRad = (catAngle * Math.PI) / 180;
+        const catX = 250 + R_cat * Math.cos(catRad);
+        const catY = 250 + R_cat * Math.sin(catRad);
+        const catRotation = catAngle + 90; // tangent clockwise
+        
+        if (catContainer) {
+            catContainer.setAttribute('transform', `translate(${catX}, ${catY}) rotate(${catRotation})`);
+        }
+        
+        // Rotate cogs in background
+        gearAngle += 0.15;
+        gearsConfig.forEach(g => {
+            const angle = gearAngle * g.speedMult + g.offset;
+            const el = document.getElementById(g.id);
+            if (el) {
+                el.setAttribute('transform', `rotate(${angle}, ${g.cx}, ${g.cy})`);
+            }
+        });
+        
+        // --- DRAW TAIL POINTING TO MINUTE ---
+        // Rear coordinates in local space are (-16, -8)
+        // Convert local rear to absolute SVG coordinates
+        const phi = (catRotation * Math.PI) / 180;
+        const xRear = catX + (-16) * Math.cos(phi) - (-8) * Math.sin(phi);
+        const yRear = catY + (-16) * Math.sin(phi) + (-8) * Math.cos(phi);
+        
+        // Minute Target Angle (Smooth sweep)
+        const targetMinAngle = -90 + mins * 6 + secs * 0.1;
+        const minRad = (targetMinAngle * Math.PI) / 180;
+        
+        // Minute tip position (Radius 165, slightly inside)
+        const xMin = 250 + 165 * Math.cos(minRad);
+        const yMin = 250 + 165 * Math.sin(minRad);
+        
+        // Control Point 1: exits tail base backwards (tangent opposite: catAngle + 180)
+        const cpAngle1 = ((catAngle + 180) * Math.PI) / 180;
+        const cx1 = xRear + 45 * Math.cos(cpAngle1);
+        const cy1 = yRear + 45 * Math.sin(cpAngle1);
+        
+        // Control Point 2: projects from center towards the minute mark
+        const cx2 = 250 + 85 * Math.cos(minRad);
+        const cy2 = 250 + 85 * Math.sin(minRad);
+        
+        // Apply smooth curved tail path
+        const dPath = `M ${xRear},${yRear} C ${cx1},${cy1} ${cx2},${cy2} ${xMin},${yMin}`;
+        if (tailOuter) tailOuter.setAttribute('d', dPath);
+        if (tailCore) tailCore.setAttribute('d', dPath);
+        
+        // --- EYE TRACKING ---
+        // Cat head center relative to container is (16, -14)
+        // Calculate absolute head coordinates
+        const headX = catX + 16 * Math.cos(phi) - (-14) * Math.sin(phi);
+        const headY = catY + 16 * Math.sin(phi) + (-14) * Math.cos(phi);
+        
+        const dx = mouseX - headX;
+        const dy = mouseY - headY;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        
+        let ex = 0;
+        let ey = 0;
+        if (dist > 1) {
+            const maxDisp = 1.8;
+            ex = (dx / dist) * maxDisp;
+            ey = (dy / dist) * maxDisp;
+        }
+        
+        currentEyeX += (ex - currentEyeX) * 0.12;
+        currentEyeY += (ey - currentEyeY) * 0.12;
+        
+        if (catEyes) {
+            catEyes.setAttribute('transform', `translate(${currentEyeX}, ${currentEyeY})`);
+        }
+        
+        requestAnimationFrame(animateClock);
+    }
+    
+    animateClock();
+
     // Initialize list display
     displayThoughts();
 });
