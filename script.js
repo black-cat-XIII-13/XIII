@@ -392,8 +392,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const catEyes = document.getElementById('cat-eyes');
     const clockSvg = document.getElementById('shadow-clock-svg');
     
-    const tailOuter = document.getElementById('shadow-clock-tail');
-    const tailCore = document.getElementById('shadow-clock-tail-core');
+    const handMinute = document.getElementById('clock-hand-minute');
+    const handSecond = document.getElementById('clock-hand-second');
 
     const legFL = document.getElementById('leg-front-left');
     const legFR = document.getElementById('leg-front-right');
@@ -616,38 +616,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // --- DRAW TAIL POINTING TO MINUTE ---
-        // Rear coordinates in local space are (-16, -8)
-        // Convert local rear to absolute SVG coordinates
-        const phi = (catRotation * Math.PI) / 180;
-        const xRear = catX + (-16) * Math.cos(phi) - (-8) * Math.sin(phi);
-        const yRear = catY + (-16) * Math.sin(phi) + (-8) * Math.cos(phi);
+        // --- ROTATE CLOCK HANDS ---
+        const minAngle = mins * 6 + secs * 0.1;
+        const secAngle = secs * 6 + ms * 0.006;
         
-        // Minute Target Angle (Smooth sweep)
-        const targetMinAngle = -90 + mins * 6 + secs * 0.1;
-        const minRad = (targetMinAngle * Math.PI) / 180;
-        
-        // Minute tip position (Radius 165, slightly inside)
-        const xMin = 250 + 165 * Math.cos(minRad);
-        const yMin = 250 + 165 * Math.sin(minRad);
-        
-        // Control Point 1: exits tail base backwards (tangent opposite: catAngle + 180)
-        const cpAngle1 = ((catAngle + 180) * Math.PI) / 180;
-        const cx1 = xRear + 45 * Math.cos(cpAngle1);
-        const cy1 = yRear + 45 * Math.sin(cpAngle1);
-        
-        // Control Point 2: projects from center towards the minute mark
-        const cx2 = 250 + 85 * Math.cos(minRad);
-        const cy2 = 250 + 85 * Math.sin(minRad);
-        
-        // Apply smooth curved tail path
-        const dPath = `M ${xRear},${yRear} C ${cx1},${cy1} ${cx2},${cy2} ${xMin},${yMin}`;
-        if (tailOuter) tailOuter.setAttribute('d', dPath);
-        if (tailCore) tailCore.setAttribute('d', dPath);
+        if (handMinute) {
+            handMinute.setAttribute('transform', `rotate(${minAngle}, 250, 250)`);
+        }
+        if (handSecond) {
+            handSecond.setAttribute('transform', `rotate(${secAngle}, 250, 250)`);
+        }
         
         // --- EYE TRACKING ---
         // Cat head center relative to container is (16, -14)
         // Calculate absolute head coordinates
+        const phi = (catRotation * Math.PI) / 180;
         const headX = catX + 16 * Math.cos(phi) - (-14) * Math.sin(phi);
         const headY = catY + 16 * Math.sin(phi) + (-14) * Math.cos(phi);
         
