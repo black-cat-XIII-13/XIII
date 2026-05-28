@@ -572,28 +572,21 @@ document.addEventListener('DOMContentLoaded', () => {
             catAngle += speed;
             walkTime += 0.16; // walk cycles
             
-            // Bobbing body animation
-            const bob = 1.2 * Math.abs(Math.sin(walkTime * 2.2));
+            // Bobbing body animation (sitting bounce) and leg swing
+            const bob = 1.0 * Math.abs(Math.sin(walkTime * 2.2));
             if (catBobGroup) {
                 catBobGroup.setAttribute('transform', `translate(0, ${bob})`);
             }
-            
-            // Swing legs (diagonal walking gait)
-            const swing = 18 * Math.sin(walkTime * 2.2);
-            if (legFL) legFL.setAttribute('transform', `rotate(${swing}, 7.2, -7)`);
-            if (legFR) legFR.setAttribute('transform', `rotate(${-swing}, 11.8, -7)`);
-            if (legBL) legBL.setAttribute('transform', `rotate(${swing}, -7.2, -7)`);
-            if (legBR) legBR.setAttribute('transform', `rotate(${-swing}, -11.2, -7)`);
+            // Leg animation
+            const legAngle = Math.sin(walkTime * 3) * 15; // swing amplitude
+            if (legFL) legFL.setAttribute('transform', `rotate(${legAngle}, -10, -30)`);
+            if (legFR) legFR.setAttribute('transform', `rotate(${-legAngle}, 10, -30)`);
+            if (legBL) legBL.setAttribute('transform', `rotate(${legAngle}, -10, -10)`);
+            if (legBR) legBR.setAttribute('transform', `rotate(${-legAngle}, 10, -10)`);
         } else {
             // Cat stops exactly at the hour
             catAngle = targetHourAngle;
-            
-            // Return to standing posture
             if (catBobGroup) catBobGroup.setAttribute('transform', 'translate(0, 0)');
-            if (legFL) legFL.setAttribute('transform', 'rotate(0, 7.2, -7)');
-            if (legFR) legFR.setAttribute('transform', 'rotate(0, 11.8, -7)');
-            if (legBL) legBL.setAttribute('transform', 'rotate(0, -7.2, -7)');
-            if (legBR) legBR.setAttribute('transform', 'rotate(0, -11.2, -7)');
         }
         
         // Position Cat on Clock Rim
@@ -628,11 +621,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // --- EYE TRACKING ---
-        // Cat head center relative to container is (16, -14)
+        // Cat head center relative to container is (-20.5, -34)
         // Calculate absolute head coordinates
         const phi = (catRotation * Math.PI) / 180;
-        const headX = catX + 16 * Math.cos(phi) - (-14) * Math.sin(phi);
-        const headY = catY + 16 * Math.sin(phi) + (-14) * Math.cos(phi);
+        const headX = catX + (-20.5) * Math.cos(phi) - (-34) * Math.sin(phi);
+        const headY = catY + (-20.5) * Math.sin(phi) + (-34) * Math.cos(phi);
         
         const dx = mouseX - headX;
         const dy = mouseY - headY;
