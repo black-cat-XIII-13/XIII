@@ -186,6 +186,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { passive: true });
     }
 
+    // --- MOBILE MENU TOGGLE ---
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navContainer = document.querySelector('.nav-container');
+
+    if (mobileMenuToggle && navContainer) {
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('open');
+            navContainer.classList.toggle('open');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navContainer.contains(e.target) && !mobileMenuToggle.contains(e.target) && navContainer.classList.contains('open')) {
+                mobileMenuToggle.classList.remove('open');
+                navContainer.classList.remove('open');
+            }
+        });
+    }
 
     // --- 4. SCROLL FADE-IN & NAV SPY ---
     const sections = document.querySelectorAll('.section');
@@ -234,6 +252,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 top: targetSection.offsetTop - 80,
                 behavior: 'smooth'
             });
+
+            // Close mobile menu if open
+            if (mobileMenuToggle && mobileMenuToggle.classList.contains('open')) {
+                mobileMenuToggle.classList.remove('open');
+                navContainer.classList.remove('open');
+            }
         });
     });
 

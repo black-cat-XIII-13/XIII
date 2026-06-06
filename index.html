@@ -35,20 +35,27 @@
                 <img src="logo.png" alt="BLACK CAT XIII Logo Preview" />
             </div>
         </a>
-        <nav class="nav">
-            <a href="#hero" class="nav-link active">البداية</a>
-            <a href="#identity" class="nav-link">الهوية</a>
-            <a href="#shadow-clock" class="nav-link">ساعة الظل</a>
-            <a href="#philosophy" class="nav-link">التأملات</a>
-            <a href="#reflections" class="nav-link">١٣ حقيقة</a>
-            <a href="#silence" class="nav-link">صندوق الصمت</a>
-        </nav>
-        <div class="audio-control" id="audio-toggle" title="تشغيل موسيقى العراب (The Godfather)">
-            <svg class="audio-icon" viewBox="0 0 24 24" width="24" height="24">
-                <path fill="currentColor"
-                    d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
-            </svg>
-            <span class="audio-status">صامت</span>
+        <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-container">
+            <nav class="nav">
+                <a href="#hero" class="nav-link active">البداية</a>
+                <a href="#identity" class="nav-link">الهوية</a>
+                <a href="#shadow-clock" class="nav-link">ساعة الظل</a>
+                <a href="#philosophy" class="nav-link">التأملات</a>
+                <a href="#reflections" class="nav-link">١٣ حقيقة</a>
+                <a href="#silence" class="nav-link">صندوق الصمت</a>
+            </nav>
+            <div class="audio-control" id="audio-toggle" title="تشغيل موسيقى العراب (The Godfather)">
+                <svg class="audio-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor"
+                        d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
+                </svg>
+                <span class="audio-status">صامت</span>
+            </div>
         </div>
     </header>
 
@@ -170,67 +177,79 @@
 
                                     <!-- Tail (curves upward elegantly) -->
                                     <g id="cat-tail-group">
-                                        <path d="M -36,-12 C -42,-18 -50,-32 -48,-44 C -47,-49 -44,-49 -43,-44 C -42,-36 -39,-24 -36,-16"
-                                              fill="none" stroke="#050508" stroke-width="5" stroke-linecap="round"/>
+                                        <path
+                                            d="M -36,-12 C -42,-18 -50,-32 -48,-44 C -47,-49 -44,-49 -43,-44 C -42,-36 -39,-24 -36,-16"
+                                            fill="none" stroke="#050508" stroke-width="5" stroke-linecap="round" />
                                     </g>
 
                                     <!-- Back Legs (behind body, animated via JS) -->
                                     <g id="leg-back-left">
-                                        <line x1="-22" y1="-5" x2="-26" y2="5" stroke="#050508" stroke-width="4" stroke-linecap="round"/>
-                                        <ellipse cx="-26.5" cy="5.5" rx="3" ry="1.5" fill="#050508"/>
+                                        <line x1="-22" y1="-5" x2="-26" y2="5" stroke="#050508" stroke-width="4"
+                                            stroke-linecap="round" />
+                                        <ellipse cx="-26.5" cy="5.5" rx="3" ry="1.5" fill="#050508" />
                                     </g>
                                     <g id="leg-back-right">
-                                        <line x1="-14" y1="-5" x2="-12" y2="5" stroke="#050508" stroke-width="4" stroke-linecap="round"/>
-                                        <ellipse cx="-11.5" cy="5.5" rx="3" ry="1.5" fill="#050508"/>
+                                        <line x1="-14" y1="-5" x2="-12" y2="5" stroke="#050508" stroke-width="4"
+                                            stroke-linecap="round" />
+                                        <ellipse cx="-11.5" cy="5.5" rx="3" ry="1.5" fill="#050508" />
                                     </g>
 
                                     <!-- Rear Haunch -->
-                                    <ellipse cx="-22" cy="-10" rx="16" ry="11" fill="#050508"/>
+                                    <ellipse cx="-22" cy="-10" rx="16" ry="11" fill="#050508" />
 
                                     <!-- Main Body Torso -->
-                                    <ellipse cx="0" cy="-13" rx="36" ry="10" fill="#050508" stroke="rgba(212,175,55,0.12)" stroke-width="0.6"/>
+                                    <ellipse cx="0" cy="-13" rx="36" ry="10" fill="#050508"
+                                        stroke="rgba(212,175,55,0.12)" stroke-width="0.6" />
 
                                     <!-- Shoulder / Chest -->
-                                    <ellipse cx="22" cy="-15" rx="15" ry="11" fill="#050508"/>
+                                    <ellipse cx="22" cy="-15" rx="15" ry="11" fill="#050508" />
 
                                     <!-- Front Legs (in front of body, animated via JS) -->
                                     <g id="leg-front-left">
-                                        <line x1="16" y1="-5" x2="14" y2="5" stroke="#050508" stroke-width="4" stroke-linecap="round"/>
-                                        <ellipse cx="13.5" cy="5.5" rx="3" ry="1.5" fill="#050508"/>
+                                        <line x1="16" y1="-5" x2="14" y2="5" stroke="#050508" stroke-width="4"
+                                            stroke-linecap="round" />
+                                        <ellipse cx="13.5" cy="5.5" rx="3" ry="1.5" fill="#050508" />
                                     </g>
                                     <g id="leg-front-right">
-                                        <line x1="26" y1="-5" x2="28" y2="5" stroke="#050508" stroke-width="4" stroke-linecap="round"/>
-                                        <ellipse cx="28.5" cy="5.5" rx="3" ry="1.5" fill="#050508"/>
+                                        <line x1="26" y1="-5" x2="28" y2="5" stroke="#050508" stroke-width="4"
+                                            stroke-linecap="round" />
+                                        <ellipse cx="28.5" cy="5.5" rx="3" ry="1.5" fill="#050508" />
                                     </g>
 
                                     <!-- Neck -->
-                                    <polygon points="26,-18 34,-14 40,-24 32,-30" fill="#050508"/>
+                                    <polygon points="26,-18 34,-14 40,-24 32,-30" fill="#050508" />
 
                                     <!-- Head -->
-                                    <circle cx="38" cy="-28" r="12" fill="#050508" stroke="rgba(212,175,55,0.1)" stroke-width="0.5"/>
+                                    <circle cx="38" cy="-28" r="12" fill="#050508" stroke="rgba(212,175,55,0.1)"
+                                        stroke-width="0.5" />
 
                                     <!-- Muzzle / Snout -->
-                                    <ellipse cx="48" cy="-24" rx="6" ry="4" fill="#050508"/>
+                                    <ellipse cx="48" cy="-24" rx="6" ry="4" fill="#050508" />
 
                                     <!-- Ears -->
-                                    <path d="M 30,-36 L 26,-54 L 36,-38 Z" fill="#050508" stroke="rgba(212,175,55,0.12)" stroke-width="0.4" stroke-linejoin="round"/>
-                                    <path d="M 40,-38 L 44,-54 L 48,-38 Z" fill="#050508" stroke="rgba(212,175,55,0.12)" stroke-width="0.4" stroke-linejoin="round"/>
+                                    <path d="M 30,-36 L 26,-54 L 36,-38 Z" fill="#050508" stroke="rgba(212,175,55,0.12)"
+                                        stroke-width="0.4" stroke-linejoin="round" />
+                                    <path d="M 40,-38 L 44,-54 L 48,-38 Z" fill="#050508" stroke="rgba(212,175,55,0.12)"
+                                        stroke-width="0.4" stroke-linejoin="round" />
 
                                     <!-- Inner Ear Glow -->
-                                    <path d="M 31.5,-37.5 L 28,-50 L 35,-39 Z" fill="rgba(0, 255, 204, 0.06)" stroke="none"/>
-                                    <path d="M 41.5,-39 L 44.5,-50 L 47,-39 Z" fill="rgba(0, 255, 204, 0.06)" stroke="none"/>
+                                    <path d="M 31.5,-37.5 L 28,-50 L 35,-39 Z" fill="rgba(0, 255, 204, 0.06)"
+                                        stroke="none" />
+                                    <path d="M 41.5,-39 L 44.5,-50 L 47,-39 Z" fill="rgba(0, 255, 204, 0.06)"
+                                        stroke="none" />
 
                                     <!-- Glowing Green Eye -->
                                     <g id="cat-eyes">
-                                        <ellipse cx="44" cy="-28" rx="3" ry="2" fill="var(--color-green)" filter="url(#green-glow)"/>
-                                        <line x1="44" y1="-30.5" x2="44" y2="-25.5" stroke="#000" stroke-width="1"/>
+                                        <ellipse cx="44" cy="-28" rx="3" ry="2" fill="var(--color-green)"
+                                            filter="url(#green-glow)" />
+                                        <line x1="44" y1="-30.5" x2="44" y2="-25.5" stroke="#000" stroke-width="1" />
                                     </g>
 
                                     <!-- Whiskers -->
                                     <g id="cat-whiskers" stroke="rgba(212,175,55,0.25)" stroke-width="0.3" fill="none">
-                                        <path d="M 52,-22 C 58,-20 64,-19 70,-19"/>
-                                        <path d="M 52,-24 C 58,-24 64,-24 70,-24"/>
-                                        <path d="M 52,-26 C 58,-28 64,-29 70,-30"/>
+                                        <path d="M 52,-22 C 58,-20 64,-19 70,-19" />
+                                        <path d="M 52,-24 C 58,-24 64,-24 70,-24" />
+                                        <path d="M 52,-26 C 58,-28 64,-29 70,-30" />
                                     </g>
 
                                 </g>
