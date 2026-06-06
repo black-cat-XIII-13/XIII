@@ -618,7 +618,7 @@ document.addEventListener('DOMContentLoaded', () => {
         catAngle = secs * 6 + ms * 0.006 - 90; // 12 o'clock is -90 deg
         
         // Continuous walk animation
-        walkTime += 0.16; // constant walk cycle
+        walkTime += 0.02; // slower walk cycle to match seconds speed
         
         // Bobbing body animation (walking bounce)
         const bob = 1.0 * Math.abs(Math.sin(walkTime * 2.2));
