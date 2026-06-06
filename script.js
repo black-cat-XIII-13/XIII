@@ -150,6 +150,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     audioToggle.addEventListener('click', toggleAudio);
 
+    // --- LOGO PREVIEW: TAP TO SHOW (Mobile + Desktop click fallback) ---
+    const logoLink = document.querySelector('.logo-img-link');
+
+    if (logoLink) {
+        // عند النقر/اللمس على اللوجو
+        logoLink.addEventListener('click', (e) => {
+            e.preventDefault(); // نمنع الـ anchor من الانتقال فوراً
+            const isOpen = logoLink.classList.contains('logo-preview-open');
+
+            if (isOpen) {
+                // إذا كان مفتوحاً: أغلقه ثم انتقل للـ hero
+                logoLink.classList.remove('logo-preview-open');
+                // بعد إغلاق البريفيو، ننتقل للـ hero
+                setTimeout(() => {
+                    const hero = document.getElementById('hero');
+                    if (hero) window.scrollTo({ top: hero.offsetTop - 80, behavior: 'smooth' });
+                }, 150);
+            } else {
+                // افتحه
+                logoLink.classList.add('logo-preview-open');
+            }
+        });
+
+        // إغلاق البريفيو عند النقر في أي مكان آخر
+        document.addEventListener('click', (e) => {
+            if (!logoLink.contains(e.target)) {
+                logoLink.classList.remove('logo-preview-open');
+            }
+        });
+
+        // إغلاق البريفيو عند التمرير (مهم على الموبايل)
+        window.addEventListener('scroll', () => {
+            logoLink.classList.remove('logo-preview-open');
+        }, { passive: true });
+    }
+
 
     // --- 4. SCROLL FADE-IN & NAV SPY ---
     const sections = document.querySelectorAll('.section');
@@ -229,12 +265,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let radius = 150; // default radius
 
     // Responsive wheel radius adjustment
+    // نحسب الـ radius من حجم العجلة الفعلي في DOM
+    // هذا يضمن التزامن التلقائي مع قيم min() و clamp() في CSS
     function adjustRadius() {
-        if (window.innerWidth <= 600) {
-            radius = 110;
-        } else {
-            radius = 150;
-        }
+        const wheelSize = wheel.offsetWidth || 400;
+        // الـ radius = 37.5% من حجم العجلة (للحفاظ على نسب منسجمة)
+        radius = Math.round(wheelSize * 0.375);
         positionNodes();
     }
 

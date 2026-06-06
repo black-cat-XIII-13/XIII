@@ -120,12 +120,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 8%;
+    /* rem بدلاً من px لأنها تحترم إعدادات المستخدم للخط */
+    padding: 1rem clamp(1rem, 5vw, 8%);
     background: rgba(6, 6, 8, 0.8);
     backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
     transition: var(--transition-smooth);
+    /* نمنع الـ header من الطفح */
+    overflow: visible;
 }
 
 .logo-img-link {
@@ -150,7 +153,7 @@ body {
                 filter 0.4s ease;
 }
 
-/* Full-size logo popup on hover */
+/* Full-size logo popup — Hover (Desktop) + Tap (Mobile) */
 .logo-preview {
     position: absolute;
     top: calc(100% + 18px);
@@ -165,6 +168,7 @@ body {
         0 0 100px rgba(212, 175, 55, 0.15),
         0 25px 70px rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(20px);
+    /* pointer-events: none يمنع التفاعل — سيُلغى عند .logo-preview-open */
     pointer-events: none;
 
     /* Hidden by default */
@@ -189,11 +193,19 @@ body {
 }
 
 .logo-preview img {
-    width: 380px;
+    /* clamp: لا تقل عن 200px ولا تتجاوز 380px، وتتكيف مع 80vw */
+    width: clamp(200px, 80vw, 380px);
     height: auto;
     display: block;
     border-radius: 8px;
     filter: brightness(1.15) contrast(1.05);
+}
+
+/* يُفعَّل بالـ JS عند النقر — يعمل على كلٍّ من موبايل وديسكتوب */
+.logo-img-link.logo-preview-open .logo-preview {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
 }
 
 .logo-img-link:hover .logo-preview {
@@ -203,7 +215,10 @@ body {
 
 .nav {
     display: flex;
-    gap: 25px;
+    /* gap يتقلص تدريجياً مع الشاشة بدلاً من breakpoint مفاجئ */
+    gap: clamp(10px, 2vw, 25px);
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .nav-link {
@@ -273,10 +288,12 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 120px 20px 60px 20px;
+    /* padding-top بـ clamp: يتكيف بين 90px (موبايل) و120px (ديسكتوب) */
+    padding: clamp(90px, 12vh, 120px) clamp(16px, 4vw, 20px) 60px;
     display: flex;
     flex-direction: column;
-    gap: 120px;
+    /* gap يتقلص على الشاشات الصغيرة */
+    gap: clamp(60px, 10vh, 120px);
 }
 
 .section {
@@ -295,7 +312,8 @@ body {
 }
 
 .section-title {
-    font-size: 2.2rem;
+    /* clamp: 1.5rem (موبايل) → 2.2rem (ديسكتوب) انتقال سلس */
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
     font-weight: 700;
     margin-bottom: 15px;
     color: var(--color-text-main);
@@ -410,7 +428,8 @@ body {
 }
 
 .number-13 {
-    font-size: 5rem;
+    /* clamp: 3rem (موبايل ضيق) → 5rem (شاشة كبيرة) */
+    font-size: clamp(3rem, 10vw, 5rem);
     font-weight: 900;
     color: var(--color-gold);
     position: absolute;
@@ -422,21 +441,28 @@ body {
 }
 
 .hero-title {
-    font-size: 3.5rem;
+    /* clamp: 2rem (موبايل) → 3.5rem (ديسكتوب) — نحافظ على الجلالة مع الحماية من الطفح */
+    font-size: clamp(2rem, 8vw, 3.5rem);
     font-weight: 900;
-    letter-spacing: 6px;
+    /* letter-spacing يتقلص على الموبايل لأن القيمة الثابتة تطيح بالكلمة */
+    letter-spacing: clamp(2px, 1.5vw, 6px);
     color: var(--color-text-main);
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
 .hero-subtitle {
     font-family: var(--font-philosophy);
-    font-size: 1.8rem;
+    /* clamp: 1.1rem (موبايل) → 1.8rem (ديسكتوب) */
+    font-size: clamp(1.1rem, 4vw, 1.8rem);
     font-style: italic;
     color: var(--color-gold);
     max-width: 600px;
+    /* max-width: 100% يمنع الطفح على الشاشات الضيقة */
+    width: 100%;
     text-shadow: 0 0 10px var(--color-gold-glow);
     margin-top: 10px;
+    padding: 0 1rem;
+    box-sizing: border-box;
 }
 
 .scroll-indicator {
@@ -534,7 +560,9 @@ body {
 /* Flip card mechanics */
 .flip-card {
     background-color: transparent;
-    height: 280px;
+    /* min-height بدلاً من height: يمنع قطع المحتوى على الموبايل */
+    min-height: 280px;
+    height: auto;
     perspective: 1000px;
     cursor: pointer;
 }
@@ -542,6 +570,8 @@ body {
 .flip-card-inner {
     position: relative;
     width: 100%;
+    /* نرث الارتفاع من الأب المرن */
+    min-height: 280px;
     height: 100%;
     text-align: center;
     transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -555,6 +585,8 @@ body {
 .flip-card-front, .flip-card-back {
     position: absolute;
     width: 100%;
+    /* min-height يضمن عدم قطع المحتوى */
+    min-height: 280px;
     height: 100%;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
@@ -562,7 +594,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    /* padding يتقلص على الموبايل */
+    padding: clamp(15px, 4vw, 30px);
 }
 
 .flip-card-front {
@@ -640,15 +673,18 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 60px;
+    gap: clamp(20px, 5vw, 60px);
     margin-top: 20px;
-    min-height: 480px;
+    /* min-height مرن بدلاً من قيمة ثابتة */
+    min-height: min(480px, 80vmin);
 }
 
 .reflections-wheel {
     position: relative;
-    width: 400px;
-    height: 400px;
+    /* vmin يحافظ على الشكل الدائري بغض النظر عن اتجاه الشاشة */
+    /* min() يمنع تجاوز 400px على الشاشات الكبيرة */
+    width: min(400px, 88vmin);
+    height: min(400px, 88vmin);
     border-radius: 50%;
     border: 1px dashed rgba(255, 255, 255, 0.1);
     display: flex;
@@ -1066,121 +1102,184 @@ body {
     }
 }
 
-/* RESPONSIVE DESIGN */
-@media (max-width: 968px) {
-    .container {
-        padding-top: 100px;
-        gap: 80px;
-    }
-    
+/* ==========================================================================
+   RESPONSIVE DESIGN — MOBILE-FIRST BREAKPOINTS
+   القاعدة: Breakpoints تُوضع عند انكسار التصميم، لا عند أحجام أجهزة محددة
+   ========================================================================== */
+
+/* ── Tablet & Medium Screens (ينكسر التصميم عند ~900px) ── */
+@media (max-width: 900px) {
+
+    /* الساعة: نحوّل من صف إلى عمود — المحتوى محفوظ بالكامل */
     .clock-display-container {
         flex-direction: column;
         gap: 40px;
         text-align: center;
     }
-    
+
     .clock-info {
         text-align: center;
         align-items: center;
+        order: 1;
     }
-    
+
+    .clock-wrapper {
+        order: 2;
+        /* نضمن الساعة لا تتجاوز 95% من عرض الحاوي */
+        max-width: min(420px, 90%);
+        width: 100%;
+    }
+
+    /* نغيّر اتجاه الحد من اليمين إلى الأسفل عند التكديس */
     .clock-quote {
         border-right: none;
         border-bottom: 2px solid var(--color-gold);
         padding-right: 0;
-        padding-bottom: 20px;
+        padding-bottom: 16px;
         width: 100%;
-        max-width: 600px;
+        max-width: 560px;
     }
-    
+
+    /* الفلسفة: عمود واحد */
     .philosophy-grid {
         grid-template-columns: 1fr;
     }
-    
+
+    /* الـ Reflections: عمود */
     .reflections-container {
         flex-direction: column;
-        gap: 40px;
+        align-items: center;
     }
-    
+
     .reflection-display-panel {
         width: 100%;
         border-left: none;
+        /* RTL: الحد يكون بالأعلى عند التكديس */
         border-top: 3px solid var(--color-gold);
-        padding-top: 30px;
+        padding-top: 24px;
         min-height: 180px;
     }
-    
+
+    /* الهوية: عمود واحد */
     .identity-grid {
         grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 600px) {
-    .clock-info h3 {
-        font-size: 1.8rem;
-    }
-    .clock-quote {
-        font-size: 1.25rem;
-    }
-    #digital-clock {
-        font-size: 1.4rem;
+/* ── Small Phones (ينكسر التصميم عند ~520px) ── */
+@media (max-width: 520px) {
+
+    /* الـ Nav: نقلل المسافات بين الروابط ونسمح بالتفاف */
+    .nav {
+        gap: 8px 14px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
-    .header {
-        padding: 15px 5%;
-        flex-direction: column;
-        gap: 15px;
+    .nav-link {
+        font-size: 0.82rem;
     }
-    
-    .nav {
-        gap: 15px;
+
+    /* الـ audio-control: نخفي الـ label لتوفير مساحة */
+    .audio-status {
+        display: none;
     }
-    
-    .logo .cinzel {
-        font-size: 1.2rem;
+
+    /* على الموبايل RTL: اللوجو في أقصى اليمين، فنجعل البريفيو
+       يمتد من اليمين نحو اليسار لكي لا يخرج عن الشاشة */
+    .logo-preview {
+        display: block; /* نُعيد الإظهار — التحكم يكون بالـ JS الآن */
+        right: 0;
+        left: auto;
+        /* نضمن عدم الطفح من اليمين */
+        max-width: calc(100vw - 2rem);
     }
-    
-    .hero-title {
-        font-size: 2.5rem;
+
+    /* نخفي السهم التوجيهي على الموبايل لأنه لا يتطابق مع الموضع الجديد */
+    .logo-preview::before {
+        display: none;
     }
-    
-    .hero-subtitle {
-        font-size: 1.3rem;
+
+    /* عيون القطة: نقلل الـ gap وحجم العين لتناسب الشاشة */
+    .cat-eyes-container {
+        gap: clamp(16px, 6vw, 40px);
+        height: clamp(80px, 20vw, 120px);
+        margin-bottom: 10px;
     }
-    
-    .reflections-wheel {
-        width: 300px;
-        height: 300px;
+
+    .eye {
+        width: clamp(45px, 14vw, 75px);
+        height: clamp(22px, 7vw, 35px);
     }
-    
-    .wheel-center {
-        width: 80px;
-        height: 80px;
+
+    .pupil {
+        height: clamp(20px, 6.5vw, 34px);
     }
-    
-    .center-13 {
-        font-size: 1.3rem;
+
+    /* الساعة: نقلل الخطوط بـ clamp */
+    .clock-info h3 {
+        font-size: clamp(1.4rem, 5vw, 2.2rem);
     }
-    
-    .center-cat {
-        font-size: 1.2rem;
+
+    .clock-quote {
+        font-size: clamp(1rem, 3.5vw, 1.5rem);
+        padding-right: 0;
     }
-    
-    .reflection-node {
-        width: 30px;
-        height: 30px;
-        font-size: 0.75rem;
+
+    #digital-clock {
+        font-size: clamp(1.2rem, 4vw, 1.7rem);
     }
-    
+
+    .digital-time-container {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    /* البطاقات: padding مرن */
     .glass-card {
-        padding: 20px;
+        padding: clamp(16px, 5vw, 40px);
     }
-    
+
+    /* الاقتباس الفلسفي */
     .philosophical-quote {
-        font-size: 1.2rem;
+        font-size: clamp(1rem, 3.5vw, 1.45rem);
     }
-    
+
+    /* الآية القرآنية */
     .quran-verse {
-        font-size: 1.3rem;
+        font-size: clamp(1.1rem, 3.8vw, 1.55rem);
+        max-width: 100%;
+    }
+
+    /* عجلة التأملات: تتكيف بـ vmin بالفعل، نضبط مركزها */
+    .wheel-center {
+        width: clamp(70px, 18vmin, 100px);
+        height: clamp(70px, 18vmin, 100px);
+    }
+
+    .center-13 {
+        font-size: clamp(1.1rem, 4vmin, 1.6rem);
+    }
+
+    .center-cat {
+        font-size: clamp(1rem, 3.5vmin, 1.5rem);
+    }
+
+    /* عقدة التأمل */
+    .reflection-node {
+        width: clamp(26px, 7vmin, 36px);
+        height: clamp(26px, 7vmin, 36px);
+        font-size: clamp(0.65rem, 2vmin, 0.85rem);
+    }
+
+    /* scroll indicator أصغر على الموبايل */
+    .scroll-indicator {
+        margin-top: 24px;
+    }
+
+    /* التذييل */
+    .footer {
+        padding: 24px 16px;
+        font-size: 0.75rem;
     }
 }
