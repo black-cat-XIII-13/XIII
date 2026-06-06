@@ -128,30 +128,77 @@ body {
     transition: var(--transition-smooth);
 }
 
-.logo {
+.logo-img-link {
     display: flex;
     align-items: center;
-    gap: 12px;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    position: relative;
 }
 
-.logo .cinzel {
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--color-gold);
-    letter-spacing: 2px;
+.logo-img-link:hover .logo-img {
+    filter: drop-shadow(0 0 16px var(--color-gold-glow)) drop-shadow(0 0 32px rgba(212,175,55,0.3));
+    transform: scale(1.08);
 }
 
-.logo .divider {
-    color: rgba(255, 255, 255, 0.2);
-    font-weight: 300;
+.logo-img {
+    height: 52px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.4s ease;
 }
 
-.logo-text {
-    font-family: var(--font-eng);
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: var(--color-text-main);
+/* Full-size logo popup on hover */
+.logo-preview {
+    position: absolute;
+    top: calc(100% + 18px);
+    left: -160px;
+    z-index: 2000;
+    background: #1a1206;
+    border: 2px solid var(--color-gold);
+    border-radius: 14px;
+    padding: 20px 24px;
+    box-shadow:
+        0 0 50px rgba(212, 175, 55, 0.4),
+        0 0 100px rgba(212, 175, 55, 0.15),
+        0 25px 70px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    pointer-events: none;
+
+    /* Hidden by default */
+    opacity: 0;
+    transform: translateY(-10px) scale(0.92);
+    transition:
+        opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo-preview::before {
+    content: '';
+    position: absolute;
+    top: -9px;
+    left: 28px;
+    width: 16px;
+    height: 16px;
+    background: #1a1206;
+    border-top: 2px solid var(--color-gold);
+    border-left: 2px solid var(--color-gold);
+    transform: rotate(45deg);
+}
+
+.logo-preview img {
+    width: 380px;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    filter: brightness(1.15) contrast(1.05);
+}
+
+.logo-img-link:hover .logo-preview {
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
 
 .nav {
