@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const clockSvg = document.getElementById('shadow-clock-svg');
     
     const handMinute = document.getElementById('clock-hand-minute');
-    const handSecond = document.getElementById('clock-hand-second');
+    const handHour = document.getElementById('clock-hand-hour');
 
     const legFL = document.getElementById('leg-front-left');
     const legFR = document.getElementById('leg-front-right');
@@ -614,40 +614,24 @@ document.addEventListener('DOMContentLoaded', () => {
             digitalClock.textContent = `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
         }
         
-        // Calculate Target Hour Angle (12 o'clock is -90 deg. Each hour is 30 deg.)
-        const currentHour = hrs % 12;
-        let targetHourAngle = -90 + currentHour * 30;
+        // Cat acts as the Seconds Hand
+        catAngle = secs * 6 + ms * 0.006 - 90; // 12 o'clock is -90 deg
         
-        // Normalise target to be clockwise (ahead of catAngle)
-        while (targetHourAngle < catAngle) {
-            targetHourAngle += 360;
+        // Continuous walk animation
+        walkTime += 0.16; // constant walk cycle
+        
+        // Bobbing body animation (walking bounce)
+        const bob = 1.0 * Math.abs(Math.sin(walkTime * 2.2));
+        if (catBobGroup) {
+            catBobGroup.setAttribute('transform', `translate(0, ${bob})`);
         }
         
-        // Walk State Machine
-        const angleDiff = targetHourAngle - catAngle;
-        
-        if (angleDiff > 0.15) {
-            // Cat walks towards designated hour (constant speed or ease)
-            const speed = Math.min(angleDiff, 0.85); // 0.85 degrees per frame
-            catAngle += speed;
-            walkTime += 0.16; // walk cycles
-            
-            // Bobbing body animation (sitting bounce) and leg swing
-            const bob = 1.0 * Math.abs(Math.sin(walkTime * 2.2));
-            if (catBobGroup) {
-                catBobGroup.setAttribute('transform', `translate(0, ${bob})`);
-            }
-            // Leg animation
-            const legAngle = Math.sin(walkTime * 3) * 15; // swing amplitude
-            if (legFL) legFL.setAttribute('transform', `rotate(${legAngle}, -10, -30)`);
-            if (legFR) legFR.setAttribute('transform', `rotate(${-legAngle}, 10, -30)`);
-            if (legBL) legBL.setAttribute('transform', `rotate(${legAngle}, -10, -10)`);
-            if (legBR) legBR.setAttribute('transform', `rotate(${-legAngle}, 10, -10)`);
-        } else {
-            // Cat stops exactly at the hour
-            catAngle = targetHourAngle;
-            if (catBobGroup) catBobGroup.setAttribute('transform', 'translate(0, 0)');
-        }
+        // Leg animation (swinging)
+        const legAngle = Math.sin(walkTime * 3) * 15; // swing amplitude
+        if (legFL) legFL.setAttribute('transform', `rotate(${legAngle}, -10, -30)`);
+        if (legFR) legFR.setAttribute('transform', `rotate(${-legAngle}, 10, -30)`);
+        if (legBL) legBL.setAttribute('transform', `rotate(${legAngle}, -10, -10)`);
+        if (legBR) legBR.setAttribute('transform', `rotate(${-legAngle}, 10, -10)`);
         
         // Position Cat on Clock Rim
         const catRad = (catAngle * Math.PI) / 180;
@@ -671,13 +655,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // --- ROTATE CLOCK HANDS ---
         const minAngle = mins * 6 + secs * 0.1;
-        const secAngle = secs * 6 + ms * 0.006;
+        const hourAngle = (hrs % 12) * 30 + mins * 0.5;
         
         if (handMinute) {
             handMinute.setAttribute('transform', `rotate(${minAngle}, 250, 250)`);
         }
-        if (handSecond) {
-            handSecond.setAttribute('transform', `rotate(${secAngle}, 250, 250)`);
+        if (handHour) {
+            handHour.setAttribute('transform', `rotate(${hourAngle}, 250, 250)`);
         }
         
         // --- EYE TRACKING ---
