@@ -697,4 +697,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize list display
     displayThoughts();
+
+    // --- 8. BLACK CAT QUOTES LOGIC ---
+    const catQuotes = [
+        "القط الاسود هوالحظ لنفسه والخراب علي أعدائه",
+        "إذا أردت أن ترى الحقيقة، أغمض عينيك ودع روحك تبصر.",
+        "الصمت لغة العظماء، والثرثرة زاد المفلسين.",
+        "الظل لا يفارق النور، بل هو دليله في غياب الشمس.",
+        "في العتمة المطلقة، تولد الأفكار التي تغير مجرى التاريخ.",
+        "لا تخف من المجهول، فهو الساحة الوحيدة التي يمكنك أن تزرع فيها ما تشاء.",
+        "اليقين لا يأتي من كثرة الأدلة، بل من بصيرة القلب.",
+        "من يتأمل الموت، يدرك أن الحياة ليست سوى جسر قصير.",
+        "الوحدة هي المحراب الذي تتجلى فيه الحقائق الكبرى.",
+        "القط الأسود يمر بهدوء، لكن أثره يظل محفوراً في الذاكرة.",
+        "الفلسفة سؤال، والقرآن جواب؛ ولا غنى لأحدهما عن الآخر للباحث عن الحكمة."
+    ];
+
+    const quoteText = document.getElementById('cat-quote-text');
+    const newQuoteBtn = document.getElementById('new-quote-btn');
+
+    if (quoteText && newQuoteBtn) {
+        newQuoteBtn.addEventListener('click', () => {
+            // Fade out
+            quoteText.style.opacity = 0;
+            
+            setTimeout(() => {
+                // Select random quote different from current
+                let currentQuote = quoteText.textContent.replace(/[«»]/g, '');
+                let nextQuote;
+                do {
+                    nextQuote = catQuotes[Math.floor(Math.random() * catQuotes.length)];
+                } while (nextQuote === currentQuote && catQuotes.length > 1);
+                
+                quoteText.textContent = `«${nextQuote}»`;
+                
+                // Fade in
+                quoteText.style.opacity = 1;
+            }, 500); // 500ms matches the inline CSS transition time
+        });
+    }
 });
