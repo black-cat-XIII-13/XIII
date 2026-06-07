@@ -1352,3 +1352,26 @@ body {
         font-size: 0.75rem;
     }
 }
+
+/* Corner Cat Image */
+#corner-cat {
+    position: fixed;
+    bottom: -10px;
+    left: 20px;
+    width: clamp(100px, 15vw, 150px);
+    height: auto;
+    z-index: 1000;
+    mix-blend-mode: screen; /* Removes pure black background */
+    -webkit-mask-image: radial-gradient(circle, black 40%, transparent 70%);
+    mask-image: radial-gradient(circle, black 40%, transparent 70%);
+    filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.15));
+    transition: var(--transition-smooth);
+    opacity: 0.8;
+}
+
+#corner-cat:hover {
+    opacity: 1;
+    transform: translateY(-5px);
+    filter: drop-shadow(0 0 20px rgba(0, 255, 204, 0.4));
+}
+
