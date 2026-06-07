@@ -1362,8 +1362,8 @@ body {
     height: auto;
     z-index: 1000;
     mix-blend-mode: screen; /* Removes pure black background */
-    -webkit-mask-image: radial-gradient(circle, black 40%, transparent 70%);
-    mask-image: radial-gradient(circle, black 40%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle, black 50%, transparent 70%);
+    mask-image: radial-gradient(circle, black 50%, transparent 70%);
     filter: drop-shadow(0 0 10px rgba(0, 255, 204, 0.15));
     transition: var(--transition-smooth);
     opacity: 0.8;
